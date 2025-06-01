@@ -1,0 +1,93 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 43 38% 93%;
+    --foreground: 220 10% 19%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 10% 19%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 10% 19%;
+
+    --primary: 220 10% 19%;
+    --primary-foreground: 43 38% 93%;
+
+    --secondary: 43 38% 93%;
+    --secondary-foreground: 220 10% 19%;
+
+    --muted: 43 10% 88%;
+    --muted-foreground: 220 5% 45%;
+
+    --accent: 302 25% 30%;
+    --accent-foreground: 43 38% 93%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 43 38% 93%;
+
+    --border: 220 10% 80%;
+    --input: 220 10% 80%;
+    --ring: 220 10% 19%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .ceramic-card {
+    @apply bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl hover:-translate-y-2;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .ceramic-button {
+    @apply px-6 py-3 rounded-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .primary-button {
+    @apply ceramic-button bg-metal text-lace hover:bg-metal/90;
+  }
+  
+  .secondary-button {
+    @apply ceramic-button bg-lace text-metal hover:bg-lace/90;
+  }
+  
+  .accent-button {
+    @apply ceramic-button bg-amethyst text-white hover:bg-amethyst/90;
+  }
+}
