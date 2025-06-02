@@ -19,10 +19,10 @@ const CategoryCard = ({ category, index }: CategoryCardProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="ceramic-card overflow-hidden w-full max-w-xs"
+      className="ceramic-card overflow-hidden w-full"
     >
       <Link to={category.link} className="block relative group">
-        <div className="aspect-square overflow-hidden">
+        <div className="aspect-[2/1] overflow-hidden">
           <motion.img
             src={category.image}
             alt={category.name}

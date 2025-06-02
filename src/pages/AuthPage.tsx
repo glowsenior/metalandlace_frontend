@@ -1,59 +1,67 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { LoginCredentials, RegisterCredentials } from "@/types/user";
 
 const AuthPage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login, register, isLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const [loginData, setLoginData] = useState({
+  // Get the redirect path from location state or default to home
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || "/";
+  
+  const [loginData, setLoginData] = useState<LoginCredentials>({
     email: "",
     password: ""
   });
   
-  const [registerData, setRegisterData] = useState({
-    name: "",
+  const [registerData, setRegisterData] = useState<RegisterCredentials>({
+    firstName: "",
+    lastName: "",
     email: "",
+    phoneNumber: "",
     password: "",
-    confirmPassword: ""
+    passwordConfirm: ""
   });
   
-  const handleLoginChange = (e) => {
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleRegisterChange = (e) => {
+  const handleRegisterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setRegisterData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleLogin = (e) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate login process
-    setTimeout(() => {
-      toast({
-        title: "Login Successful",
-        description: "🎉 Welcome back to Metal & Lace Crafts! ",
-      });
+    try {
+      await login(loginData);
+      // Navigate is handled in the AuthContext
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
       setIsSubmitting(false);
-      navigate("/");
-    }, 1500);
+    }
   };
   
-  const handleRegister = (e) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (registerData.password !== registerData.confirmPassword) {
+    if (registerData.password !== registerData.passwordConfirm) {
       toast({
         title: "Passwords don't match",
         description: "Please make sure your passwords match.",
@@ -64,15 +72,25 @@ const AuthPage = () => {
     
     setIsSubmitting(true);
     
-    // Simulate registration process
-    setTimeout(() => {
-      toast({
-        title: "Registration Successful",
-        description: "🎉 Your account has been created. Welcome to Metal & Lace Crafts!",
-      });
+    try {
+      // Include passwordConfirm and create name from firstName and lastName
+      const { firstName, lastName, ...rest } = registerData;
+      
+      // Create a name field from firstName and lastName for backward compatibility
+      const registerCredentials = {
+        ...rest,
+        name: `${firstName} ${lastName}`,
+        firstName,
+        lastName
+      };
+      
+      await register(registerCredentials);
+      // Navigate is handled in the AuthContext
+    } catch (error) {
+      console.error("Registration error:", error);
+    } finally {
       setIsSubmitting(false);
-      navigate("/");
-    }, 1500);
+    }
   };
 
   return (
@@ -184,16 +202,30 @@ const AuthPage = () => {
               
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="register-name">Full Name</Label>
-                    <Input
-                      id="register-name"
-                      name="name"
-                      value={registerData.name}
-                      onChange={handleRegisterChange}
-                      required
-                      placeholder="Enter your name"
-                    />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="register-first-name">First Name</Label>
+                      <Input
+                        id="register-first-name"
+                        name="firstName"
+                        value={registerData.firstName}
+                        onChange={handleRegisterChange}
+                        required
+                        placeholder="first name"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="register-last-name">Last Name</Label>
+                      <Input
+                        id="register-last-name"
+                        name="lastName"
+                        value={registerData.lastName}
+                        onChange={handleRegisterChange}
+                        required
+                        placeholder="last name"
+                      />
+                    </div>
                   </div>
                   
                   <div className="space-y-2">
@@ -206,6 +238,19 @@ const AuthPage = () => {
                       onChange={handleRegisterChange}
                       required
                       placeholder="Enter your email"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="register-phone">Phone Number</Label>
+                    <Input
+                      id="register-phone"
+                      name="phoneNumber"
+                      type="tel"
+                      value={registerData.phoneNumber}
+                      onChange={handleRegisterChange}
+                      required
+                      placeholder="Enter your phone number"
                     />
                   </div>
                   
@@ -226,9 +271,9 @@ const AuthPage = () => {
                     <Label htmlFor="register-confirm-password">Confirm Password</Label>
                     <Input
                       id="register-confirm-password"
-                      name="confirmPassword"
+                      name="passwordConfirm"
                       type="password"
-                      value={registerData.confirmPassword}
+                      value={registerData.passwordConfirm}
                       onChange={handleRegisterChange}
                       required
                       placeholder="Confirm your password"

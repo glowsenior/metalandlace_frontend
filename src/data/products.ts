@@ -28,7 +28,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=2940&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1582643381895-2539c9db489b?q=80&w=2940&auto=format&fit=crop"
     ],
-    category: "vases",
+    category: "Tumblers",
     featured: true,
     new: false,
     bestseller: true,
@@ -49,7 +49,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1603975711481-98b1758b7b75?q=80&w=3029&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1576020799627-aeac74d58064?q=80&w=3029&auto=format&fit=crop"
     ],
-    category: "plates",
+    category: "Tumblers",
     featured: true,
     new: true,
     bestseller: false,
@@ -70,7 +70,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1556911899-5df3532e1414?q=80&w=3029&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1606493601752-b3232eea4081?q=80&w=2946&auto=format&fit=crop"
     ],
-    category: "gifts",
+    category: "Ceramics",
     featured: false,
     new: false,
     bestseller: true,
@@ -91,7 +91,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1578749556382-b2e29721bf28?q=80&w=3029&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1525974160448-038dacadcc71?q=80&w=3010&auto=format&fit=crop"
     ],
-    category: "decor",
+    category: "Ceramics",
     featured: true,
     new: true,
     bestseller: false,
@@ -112,7 +112,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1604244449430-6431e7d32f4a?q=80&w=3029&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=3029&auto=format&fit=crop"
     ],
-    category: "decor",
+    category: "Ceramics",
     featured: false,
     new: true,
     bestseller: false,
@@ -127,13 +127,13 @@ export const products: Product[] = [
     id: "6",
     name: "Moonlight Dinner Plate Set",
     price: 119.99,
-    description: "Bring the enchantment of moonlight to your dining table with this set of four dinner plates. Each plate features a gradient glaze that transitions from deep gunmetal to soft ivory, mimicking the moon's glow against the night sky. The organic shape and slightly raised rim add both beauty and practicality.",
+    description: "Bring the enchantment of moonlight to your dining table with this set of four dinner Tumblers. Each plate features a gradient glaze that transitions from deep gunmetal to soft ivory, mimicking the moon's glow against the night sky. The organic shape and slightly raised rim add both beauty and practicality.",
     images: [
       "https://images.unsplash.com/photo-1717852885839-166ce0621811?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTY3fHxzZXJhbWljJTIwcHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D",
       "https://images.unsplash.com/photo-1603199506016-b9a594b593c0?q=80&w=2874&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1576066438507-7704e60df3cd?q=80&w=2942&auto=format&fit=crop"
     ],
-    category: "plates",
+    category: "Tumblers",
     featured: true,
     new: false,
     bestseller: true,

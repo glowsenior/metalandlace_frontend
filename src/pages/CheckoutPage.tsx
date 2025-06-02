@@ -294,13 +294,13 @@ const CheckoutPage = () => {
                   {items.map(item => (
                     <div key={item.id} className="flex justify-between items-center">
                       <div className="flex items-center">
-                        <div className="w-12 h-12 bg-white rounded overflow-hidden mr-3 relative">
+                        <div className="w-12 h-12 bg-white rounded mr-3 relative">
                           <img
                             src={item.image}
                             alt={item.name}
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center rounded-full bg-metal text-white text-xs font-bold">
+                          <div className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center rounded-full bg-yellow-900 text-white text-xs font-bold">
                             {item.quantity}
                           </div>
                         </div>

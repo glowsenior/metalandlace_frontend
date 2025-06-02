@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShoppingCart, Menu, X, LogIn } from "lucide-react";
+import { ShoppingCart, Menu, X, LogIn, LogOut, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { items } = useCart();
+  const { user, isAuthenticated, logout } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -84,18 +86,50 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <NavLink to="/auth" className={({ isActive }) => cn(
-              "flex items-center space-x-1.5 font-medium transition-all duration-200",
-              isActive ? "text-plum" : "text-metal hover:text-amethyst"
-            )}>
-              <LogIn className="h-5 w-5" />
-              <span className="hidden sm:inline">Login</span>
-            </NavLink>
-          </motion.div>
+          {isAuthenticated ? (
+            <div className="flex items-center space-x-4">
+              {user?.role === 'admin' && (
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <NavLink to="/admin" className={({ isActive }) => cn(
+                    "flex items-center space-x-1.5 font-medium transition-all duration-200",
+                    isActive ? "text-plum" : "text-metal hover:text-amethyst"
+                  )}>
+                    <User className="h-5 w-5" />
+                    <span className="hidden sm:inline">Admin</span>
+                  </NavLink>
+                </motion.div>
+              )}
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Button 
+                  variant="ghost" 
+                  className="flex items-center space-x-1.5 font-medium text-metal hover:text-amethyst"
+                  onClick={logout}
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span className="hidden sm:inline">Logout</span>
+                </Button>
+              </motion.div>
+            </div>
+          ) : (
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <NavLink to="/auth" className={({ isActive }) => cn(
+                "flex items-center space-x-1.5 font-medium transition-all duration-200",
+                isActive ? "text-plum" : "text-metal hover:text-amethyst"
+              )}>
+                <LogIn className="h-5 w-5" />
+                <span className="hidden sm:inline">Login</span>
+              </NavLink>
+            </motion.div>
+          )}
           
           <Link to="/cart">
             <motion.div
@@ -150,34 +184,52 @@ const Navbar = () => {
                 {link.name}
               </NavLink>
             ))}
-            <Link 
-              to="/auth"
-              className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
-              onClick={() => setIsOpen(false)}
-            >
-              Login / Register
-            </Link>
-            <Link 
-              to="/admin"
-              className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
-              onClick={() => setIsOpen(false)}
-            >
-              Admin Dashboard
-            </Link>
-            <Link 
-              to="/admin/sales-history"
-              className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
-              onClick={() => setIsOpen(false)}
-            >
-              Sales History
-            </Link>
-            <Link 
-              to="/admin/user-management"
-              className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
-              onClick={() => setIsOpen(false)}
-            >
-              User Management
-            </Link>
+            {isAuthenticated ? (
+              <>
+                {user?.role === 'admin' && (
+                  <>
+                    <Link 
+                      to="/admin"
+                      className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Admin Dashboard
+                    </Link>
+                    <Link 
+                      to="/admin/sales-history"
+                      className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Sales History
+                    </Link>
+                    <Link 
+                      to="/admin/user-management"
+                      className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      User Management
+                    </Link>
+                  </>
+                )}
+                <button
+                  className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all text-left"
+                  onClick={() => {
+                    logout();
+                    setIsOpen(false);
+                  }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link 
+                to="/auth"
+                className="font-medium text-metal py-2 border-b border-gray-100 hover:text-amethyst transition-all"
+                onClick={() => setIsOpen(false)}
+              >
+                Login / Register
+              </Link>
+            )}
           </div>
         </motion.div>
       )}

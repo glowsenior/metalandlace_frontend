@@ -37,10 +37,10 @@ const ProductsPage = () => {
   // Filter categories
   const categories = [
     { value: "all", label: "All Products" },
-    { value: "vases", label: "Vases" },
-    { value: "plates", label: "Plates & Bowls" },
-    { value: "decor", label: "Home Decor" },
-    { value: "gifts", label: "Gift Sets" },
+    { value: "Tumblers", label: "Tumblers" },
+    { value: "Ceramics", label: "Ceramics" },
+    // { value: "decor", label: "Home Decor" },
+    // { value: "gifts", label: "Gift Sets" },
   ];
   
   // Filter options

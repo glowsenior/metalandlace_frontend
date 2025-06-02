@@ -26,6 +26,8 @@ import FAQPage from "./pages/FAQPage";
 import SellingAnalyzePage from "./pages/admin/SellingAnalyzePage";
 import SalesHistoryPage from "./pages/admin/SalesHistoryPage";
 import UserManagementPage from "./pages/admin/UserManagementPage";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +42,11 @@ const AnimatedRoutes = () => {
           <Route path="products" element={<ProductsPage />} />
           <Route path="products/:productId" element={<ProductDetailPage />} />
           <Route path="cart" element={<CartPage />} />
-          <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="checkout" element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          } />
           <Route path="auth" element={<AuthPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
@@ -48,8 +54,12 @@ const AnimatedRoutes = () => {
           <Route path="*" element={<NotFound />} />
         </Route>
         
-        {/* Admin routes with AdminLayout */}
-        <Route path="admin" element={<AdminLayout />}>
+        {/* Admin routes with AdminLayout - protected with admin role */}
+        <Route path="admin" element={
+          <ProtectedRoute requiredRole="admin">
+            <AdminLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="products/add" element={<AdminAddProduct />} />
@@ -69,7 +79,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AnimatedRoutes />
+        <AuthProvider>
+          <AnimatedRoutes />
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
