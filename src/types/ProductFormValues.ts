@@ -8,7 +8,7 @@ export type ProductFormValues = {
   featured: boolean;
   new: boolean;
   bestseller: boolean;
-  images: string[];
+  images: { url: string }[];
   imageFiles?: File[];
   dimensions: string;
   weight: string;

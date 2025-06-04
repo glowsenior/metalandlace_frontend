@@ -197,8 +197,8 @@ const mockRegister = async (credentials: RegisterCredentials): Promise<AuthRespo
 
 // Export the service
 const authService = {
-  login: !import.meta.env.DEV ? mockLogin : login,
-  register: !import.meta.env.DEV ? mockRegister : register,
+  login: login, //import.meta.env.DEV ? mockLogin : login,
+  register: register, //import.meta.env.DEV ? mockRegister : register,
   logout,
   isAuthenticated,
   getCurrentUser,

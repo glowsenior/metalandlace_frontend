@@ -28,7 +28,7 @@ const formSchema = z.object({
   featured: z.boolean().default(false),
   new: z.boolean().default(false),
   bestseller: z.boolean().default(false),
-  images: z.array(z.string()).min(1, "At least one image is required"),
+  images: z.array(z.object({ url: z.string() })).min(1, "At least one image is required"),
   imageFiles: z.array(z.any()).optional(), // Allow File objects
   dimensions: z.string().min(1, "Dimensions are required"),
   weight: z.string().min(1, "Weight is required"),

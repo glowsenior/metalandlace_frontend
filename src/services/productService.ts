@@ -11,7 +11,7 @@ export interface Product {
   price: number;
   stock: number;
   category: string;
-  images: string[];
+  images: { url: string }[];
   featured: boolean;
   new: boolean;
   bestseller: boolean;
@@ -92,7 +92,7 @@ export const createProduct = async (productData: Omit<Product, 'id'> & { imageFi
     
     // Add all product data except imageFiles to formData
     Object.entries(productData).forEach(([key, value]) => {
-      if (key !== 'imageFiles' && key !== 'images') {
+      if (key !== 'imageFiles') {
         if (typeof value === 'object') {
           formData.append(key, JSON.stringify(value));
         } else {
@@ -138,7 +138,7 @@ export const updateProduct = async (
     
     // Add all product data except imageFiles to formData
     Object.entries(productData).forEach(([key, value]) => {
-      if (key !== 'imageFiles' && key !== 'images') {
+      if (key !== 'imageFiles') {
         if (typeof value === 'object' && value !== null && !(value instanceof File)) {
           formData.append(key, JSON.stringify(value));
         } else if (value !== null && value !== undefined) {
@@ -146,7 +146,7 @@ export const updateProduct = async (
         }
       }
     });
-    
+    console.log(productData, '------ imageFiles');
     // Add each image file to formData
     productData.imageFiles.forEach((file) => {
       formData.append(`productImages`, file);

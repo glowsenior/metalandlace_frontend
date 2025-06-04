@@ -37,7 +37,7 @@ const ProductImagesField = ({ form }: ProductImagesFieldProps) => {
     
     // Create temporary URLs for display
     const currentImages = form.getValues("images") || [];
-    const newImageUrls = newPreviewImages.map(img => img.preview);
+    const newImageUrls = newPreviewImages.map(img => {return {url:img.preview};});
     form.setValue("images", [...currentImages, ...newImageUrls]);
     
     // Reset file input

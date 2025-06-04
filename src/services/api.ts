@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API URL should be configured based on your environment
-const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
+const API_URL = import.meta.env.DEV ? 'http://192.168.10.181:5000/api/v1' : '/api/v1';
 
 // Create axios instance with base URL
 export const api = axios.create({

@@ -20,7 +20,7 @@ type FormValues = {
   featured: boolean;
   new: boolean;
   bestseller: boolean;
-  images: string[];
+  images: { url: string }[];
 };
 
 type ProductStatusFieldsProps = {
