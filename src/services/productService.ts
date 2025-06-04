@@ -82,62 +82,92 @@ export const getProductById = async (productId: string): Promise<Product | undef
 };
 
 // Create a new product
-export const createProduct = async (productData: Omit<Product, 'id'>): Promise<Product> => {
+export const createProduct = async (productData: Omit<Product, 'id'> & { imageFiles?: File[] }): Promise<Product> => {
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 400));
-  const response : any = await api.post<Product[]>(`/products`, productData);
   
-  // Generate a random ID (in a real app, the backend would handle this)
-  // const id = Math.random().toString(36).substring(2, 15);
-  
-  // const newProduct = {
-  //   id,
-  //   ...productData,
-  //   // Ensure boolean fields have default values if not provided
-  //   featured: productData.featured ?? false,
-  //   new: productData.new ?? false,
-  //   bestseller: productData.bestseller ?? false
-  // };
-  
-  // products = [...products, newProduct];
-  toast.success('Product created successfully');
-  return response;
+  // If we have image files, we need to use FormData instead of JSON
+  if (productData.imageFiles && productData.imageFiles.length > 0) {
+    const formData = new FormData();
+    
+    // Add all product data except imageFiles to formData
+    Object.entries(productData).forEach(([key, value]) => {
+      if (key !== 'imageFiles' && key !== 'images') {
+        if (typeof value === 'object') {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, String(value));
+        }
+      }
+    });
+    
+    // Add each image file to formData
+    productData.imageFiles.forEach((file, index) => {
+      formData.append(`productImages`, file);
+    });
+    
+    // Make API request with FormData
+    const response: any = await api.post('/products', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        // The Authorization header will be added by the interceptor
+      },
+    });
+    
+    toast.success('Product created successfully');
+    return response;
+  } else {
+    // If no image files, proceed with regular JSON request
+    const response: any = await api.post<Product[]>(`/products`, productData);
+    toast.success('Product created successfully');
+    return response;
+  }
 };
 
 // Update an existing product
-export const updateProduct = async (productId: string, productData: Partial<Omit<Product, 'id'>>): Promise<Product> => {
+export const updateProduct = async (
+  productId: string, 
+  productData: Partial<Omit<Product, 'id'>> & { imageFiles?: File[] }
+): Promise<Product> => {
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 400));
-  const response : any = await api.patch<Product[]>(`/products/${productId}`, productData);
   
-  // const existingProductIndex = products.findIndex(p => p.id === productId);
-  
-  // if (existingProductIndex === -1) {
-  //   toast.error('Product not found');
-  //   throw new Error('Product not found');
-  // }
-  
-  // // Get the existing product to merge with updates
-  // const existingProduct = products[existingProductIndex];
-  
-  // const updatedProduct = {
-  //   ...existingProduct,
-  //   ...productData,
-  //   id: productId,
-  //   // Ensure boolean fields are preserved from existing data if not provided
-  //   featured: productData.featured ?? existingProduct.featured,
-  //   new: productData.new ?? existingProduct.new,
-  //   bestseller: productData.bestseller ?? existingProduct.bestseller
-  // };
-  
-  // products = [
-  //   ...products.slice(0, existingProductIndex),
-  //   updatedProduct,
-  //   ...products.slice(existingProductIndex + 1)
-  // ];
-  
-  toast.success('Product updated successfully');
-  return response;
+  // If we have image files, we need to use FormData instead of JSON
+  if (productData.imageFiles && productData.imageFiles.length > 0) {
+    const formData = new FormData();
+    
+    // Add all product data except imageFiles to formData
+    Object.entries(productData).forEach(([key, value]) => {
+      if (key !== 'imageFiles' && key !== 'images') {
+        if (typeof value === 'object' && value !== null && !(value instanceof File)) {
+          formData.append(key, JSON.stringify(value));
+        } else if (value !== null && value !== undefined) {
+          formData.append(key, String(value));
+        }
+      }
+    });
+    
+    // Add each image file to formData
+    productData.imageFiles.forEach((file) => {
+      formData.append(`productImages`, file);
+    });
+    
+    // Make API request with FormData
+    const response: any = await api.patch(`/products/${productId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        // The Authorization header will be added by the interceptor
+      },
+    });
+    
+    toast.success('Product updated successfully');
+    return response;
+  } else {
+    // If no image files, proceed with regular JSON request
+    const response: any = await api.patch<Product[]>(`/products/${productId}`, productData);
+    toast.success('Product updated successfully');
+    return response;
+  }
 };
 
 // Delete a product

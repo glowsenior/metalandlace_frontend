@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Trash2 } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { Trash2, Upload } from "lucide-react";
 import {
   FormField,
   FormItem,
@@ -16,19 +16,52 @@ type ProductImagesFieldProps = {
 };
 
 const ProductImagesField = ({ form }: ProductImagesFieldProps) => {
-  const [imageInput, setImageInput] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [previewImages, setPreviewImages] = useState<{ file: File; preview: string }[]>([]);
 
-  const handleAddImage = () => {
-    if (!imageInput.trim()) return;
-
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    const files = Array.from(e.target.files);
+    const newPreviewImages = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
+    
+    // Update preview images
+    setPreviewImages(prev => [...prev, ...newPreviewImages]);
+    
+    // Update form values
+    const currentImageFiles = form.getValues("imageFiles") || [];
+    form.setValue("imageFiles", [...currentImageFiles, ...files]);
+    
+    // Create temporary URLs for display
     const currentImages = form.getValues("images") || [];
-    form.setValue("images", [...currentImages, imageInput]);
-    setImageInput("");
+    const newImageUrls = newPreviewImages.map(img => img.preview);
+    form.setValue("images", [...currentImages, ...newImageUrls]);
+    
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleRemoveImage = (index: number) => {
+    // Remove from images array
     const currentImages = form.getValues("images");
     form.setValue("images", currentImages.filter((_, i) => i !== index));
+    
+    // Remove from preview images and revoke object URL to prevent memory leaks
+    if (index < previewImages.length) {
+      URL.revokeObjectURL(previewImages[index].preview);
+      setPreviewImages(prev => prev.filter((_, i) => i !== index));
+      
+      // Remove from imageFiles if it exists
+      const currentImageFiles = form.getValues("imageFiles") || [];
+      if (currentImageFiles.length > index) {
+        form.setValue("imageFiles", currentImageFiles.filter((_, i) => i !== index));
+      }
+    }
   };
 
   return (
@@ -37,15 +70,26 @@ const ProductImagesField = ({ form }: ProductImagesFieldProps) => {
       <Separator className="my-2" />
 
       <div className="grid grid-cols-1 gap-3">
-        <div className="flex gap-2">
-          <Input
-            value={imageInput}
-            onChange={(e) => setImageInput(e.target.value)}
-            placeholder="Enter image URL..."
+        <div className="flex flex-col gap-2">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept="image/*"
+            multiple
+            className="hidden"
           />
-          <Button type="button" onClick={handleAddImage}>
-            Add
+          <Button 
+            type="button" 
+            onClick={() => fileInputRef.current?.click()}
+            className="w-full flex items-center justify-center gap-2"
+          >
+            <Upload className="h-4 w-4" />
+            Upload Images
           </Button>
+          <p className="text-xs text-muted-foreground text-center">
+            Click to select one or more image files
+          </p>
         </div>
 
         <FormField
@@ -58,7 +102,7 @@ const ProductImagesField = ({ form }: ProductImagesFieldProps) => {
                 {form.watch("images")?.map((image, index) => (
                   <div key={index} className="relative group">
                     <img
-                      src={image}
+                      src={image.url}
                       alt={`Product image ${index + 1}`}
                       className="aspect-square object-cover rounded-md border"
                     />

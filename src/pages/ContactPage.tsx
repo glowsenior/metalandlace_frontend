@@ -176,8 +176,8 @@ const ContactPage = () => {
                     <Mail className="h-6 w-6 text-amethyst mt-1" />
                     <div>
                       <h3 className="font-medium text-metal">Email</h3>
-                      <p className="text-metal/70">info@finware.com</p>
-                      <p className="text-metal/70">support@finware.com</p>
+                      <p className="text-metal/70">metalandlacecrafts@gmail.com</p>
+                      {/* <p className="text-metal/70">support@finware.com</p> */}
                     </div>
                   </div>
                   
@@ -185,8 +185,8 @@ const ContactPage = () => {
                     <Phone className="h-6 w-6 text-amethyst mt-1" />
                     <div>
                       <h3 className="font-medium text-metal">Phone</h3>
-                      <p className="text-metal/70">(555) 123-4567</p>
-                      <p className="text-metal/70">Monday - Friday, 9am - 5pm PST</p>
+                      <p className="text-metal/70">(682) 472-1129</p>
+                      <p className="text-metal/70">Monday - Friday, 9am - 5pm CDT</p>
                     </div>
                   </div>
                   
@@ -195,8 +195,8 @@ const ContactPage = () => {
                     <div>
                       <h3 className="font-medium text-metal">Studio Address</h3>
                       <p className="text-metal/70">
-                        123 Art District Street<br />
-                        Portland, OR 97205<br />
+                        123 East Second Street<br />
+                        Springtown, TX 76082<br />
                         United States
                       </p>
                     </div>

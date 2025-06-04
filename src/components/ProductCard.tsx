@@ -50,7 +50,7 @@ const ProductCard = ({
       <Link to={`/products/${product.id}`} className="block" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
         <div className="ceramic-card h-full flex flex-col">
           <div className="relative overflow-hidden aspect-square">
-            <motion.img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" animate={{
+            <motion.img src={product.images[0].url} alt={product.name} className="w-full h-full object-cover" animate={{
             scale: isHovered ? 1.05 : 1
           }} transition={{
             duration: 0.4,

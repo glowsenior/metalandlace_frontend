@@ -187,7 +187,7 @@ const AdminProducts = () => {
                       <div className="flex items-center">
                         <div className="w-12 h-12 rounded overflow-hidden mr-3">
                           <img
-                            src={product.images[0]}
+                            src={product.images[0].url}
                             alt={product.name}
                             className="w-full h-full object-cover"
                           />
