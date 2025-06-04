@@ -17,7 +17,7 @@ const AboutPage = () => {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-metal/70 to-transparent z-10" />
           <motion.img
-            src="https://images.unsplash.com/photo-1554907984-15263bfd63bd?q=80&w=2940&auto=format&fit=crop"
+            src="/aboutBackground.avif"
             alt="Ceramic Workshop"
             className="w-full h-full object-cover"
             initial={{ scale: 1.1 }}
@@ -48,15 +48,7 @@ const AboutPage = () => {
       <section className="py-20 bg-lace/30">
         <div className="page-container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              whileHover={{ 
-                scale: 1.02,
-                transition: { duration: 0.3 }
-              }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+            <div
               className="space-y-6 text-center p-6 rounded-lg transition-all duration-300"
             >
               <div className="relative flex flex-col items-center">
@@ -64,7 +56,7 @@ const AboutPage = () => {
                   Metal and Lace Crafts
                 </h2>
                 <img
-                  src="https://metalandlacecrafts.com/wp-content/themes/Iva/images/heading-floral-decor-image.png"
+                  src="/heading-floral-decor-image.png"
                   alt=""
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-50 md:w-36 opacity-70"
                   style={{ zIndex: 0 }}
@@ -83,7 +75,7 @@ const AboutPage = () => {
               <p className="text-metal/80">
                 Let’s turn your ideas into one-of-a-kind treasures!
               </p>
-            </motion.div>
+            </div>
             
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
@@ -101,7 +93,7 @@ const AboutPage = () => {
               />
               <div className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
                 <motion.img 
-                  src="https://metalandlacecrafts.com/wp-content/uploads/2025/01/MetalandLace-logo-withbackbackground-1536x1280.png" 
+                  src="MetalandLace-logo.png" 
                   alt="Ceramic Studio" 
                   className="w-full h-full object-cover"
                   whileHover={{ 
@@ -124,7 +116,7 @@ const AboutPage = () => {
             
             <div className="aspect-square overflow-hidden rounded-lg duration-300">
               <motion.img 
-                src="https://metalandlacecrafts.com/wp-content/uploads/2025/01/channiShaiprojectlogo1.png" 
+                src="/channiShaiprojectlogo.png" 
                 alt="Ceramic Studio" 
                 className="w-full h-full object-cover"
                 whileHover={{
@@ -134,26 +126,18 @@ const AboutPage = () => {
               />
             </div>
 
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              whileHover={{ 
-                scale: 1.02,
-                transition: { duration: 0.3 }
-              }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+            <div 
               className="space-y-6 text-center p-6 rounded-lg transition-all duration-300"
             >
               <div className="relative flex flex-col items-center">
-                <h4 className="text-3xl md:text-2xl font-serif font-bold text-metal z-10 relative text-[#5a3e7c]">
-                  Channi Shai Project
+                <h4 className="text-1xl md:text-1xl font-serif font-bold text-metal z-10 relative text-[#5a3e7c]">
+                  Honoring Unique Journeys Through Handcrafted Art
                 </h4>
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-metal z-10 relative text-[#5a3e7c]">
                   Metal and Lace Crafts
                 </h2>
                 <img
-                  src="https://metalandlacecrafts.com/wp-content/themes/Iva/images/heading-floral-decor-image.png"
+                  src="/heading-floral-decor-image.png"
                   alt=""
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-50 md:w-36 opacity-70"
                   style={{ zIndex: 0 }}
@@ -169,7 +153,7 @@ const AboutPage = () => {
               <p className="text-metal/80">
                 Let us help you create a custom design that celebrates the uniqueness of your loved one or supports the causes closest to your heart. Together, we turn memories into treasures.
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

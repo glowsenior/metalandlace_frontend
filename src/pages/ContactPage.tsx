@@ -56,7 +56,7 @@ const ContactPage = () => {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-metal/70 to-transparent z-10" />
           <motion.img
-            src="https://images.unsplash.com/photo-1660056981656-4c7b320c88a5?q=80&w=2940&auto=format&fit=crop"
+            src="/contact.jpg"
             alt="Ceramic Collection"
             className="w-full h-full object-cover"
             initial={{ scale: 1.1 }}
