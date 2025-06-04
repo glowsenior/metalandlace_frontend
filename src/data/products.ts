@@ -91,7 +91,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1578749556382-b2e29721bf28?q=80&w=3029&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1525974160448-038dacadcc71?q=80&w=3010&auto=format&fit=crop"
     ],
-    category: "Ceramics",
+    category: "",
     featured: true,
     new: true,
     bestseller: false,
@@ -112,7 +112,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1604244449430-6431e7d32f4a?q=80&w=3029&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=3029&auto=format&fit=crop"
     ],
-    category: "Ceramics",
+    category: "",
     featured: false,
     new: true,
     bestseller: false,

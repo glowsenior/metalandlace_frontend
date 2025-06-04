@@ -27,7 +27,7 @@ const faqs = [
 ];
 
 const FAQPage = () => (
-  <div className="max-w-2xl mx-auto px-4 py-12 min-h-[60vh]">
+  <div className="max-w-2xl mx-auto px-4 py-12 min-h-[60vh] mt-16">
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}

@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { QuillEditor } from "@/components/ui/quill-editor";
 import {
   Select,
   SelectContent,
@@ -17,18 +17,6 @@ import {
 } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
 import { ProductFormValues } from "@/types/ProductFormValues";
-
-type FormValues = {
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  category: string;
-  featured: boolean;
-  new: boolean;
-  bestseller: boolean;
-  images: string[];
-};
 
 type ProductBasicDetailsFieldsProps = {
   form: UseFormReturn<ProductFormValues>;
@@ -58,10 +46,11 @@ const ProductBasicDetailsFields = ({ form }: ProductBasicDetailsFieldsProps) => 
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea
+              <QuillEditor
                 placeholder="Enter product description..."
-                rows={5}
-                {...field}
+                value={field.value}
+                onChange={field.onChange}
+                height={250}
               />
             </FormControl>
             <FormMessage />
@@ -128,11 +117,8 @@ const ProductBasicDetailsFields = ({ form }: ProductBasicDetailsFieldsProps) => 
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="clothing">Clothing</SelectItem>
-                <SelectItem value="accessories">Accessories</SelectItem>
-                <SelectItem value="electronics">Electronics</SelectItem>
-                <SelectItem value="home">Home & Decor</SelectItem>
-                <SelectItem value="beauty">Beauty</SelectItem>
+                <SelectItem value="Tumblers">Tumblers</SelectItem>
+                <SelectItem value="Ceramics">Ceramics</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />

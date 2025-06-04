@@ -9,4 +9,9 @@ export type ProductFormValues = {
   new: boolean;
   bestseller: boolean;
   images: string[];
+  dimensions: string;
+  weight: string;
+  care: string;
+  colors?: string[];
+  materials?: string[];
 };

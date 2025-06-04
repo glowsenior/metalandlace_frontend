@@ -30,7 +30,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { getAllProducts, deleteProduct, Product } from "@/services/productService";
+import { getAllProductsAdmin, deleteProduct, Product } from "@/services/productService";
 
 const AdminProducts = () => {
   const { toast } = useToast();
@@ -46,7 +46,7 @@ const AdminProducts = () => {
     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        const productData = await getAllProducts();
+        const productData = await getAllProductsAdmin();
         setProducts(productData);
       } catch (error) {
         toast({
