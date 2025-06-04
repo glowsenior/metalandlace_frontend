@@ -78,7 +78,7 @@ const ProductDetailPage = () => {
         id: product.id,
         name: product.name,
         price: product.price,
-        image: product.images[0],
+        image: product.images[0].url,
       });
     }
     
@@ -135,7 +135,7 @@ const ProductDetailPage = () => {
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentImageIndex}
-                  src={product.images[currentImageIndex]}
+                  src={product.images[currentImageIndex].url}
                   alt={product.name}
                   className="w-full h-full object-cover"
                   initial={{ opacity: 0 }}
@@ -181,7 +181,7 @@ const ProductDetailPage = () => {
                   >
                     <div
                       className="h-full w-full object-cover"
-                      style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                      style={{ backgroundImage: `url(${img.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                     />
                   </button>
                 ))}
@@ -234,6 +234,7 @@ const ProductDetailPage = () => {
                   <p className="text-metal">{product.materials.join(", ")}</p>
                 </div>
               )}
+
               
               <div>
                 <h3 className="text-sm text-metal/60 font-medium">Availability</h3>

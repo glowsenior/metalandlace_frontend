@@ -27,6 +27,7 @@ const formSchema = z.object({
   new: z.boolean().default(false),
   bestseller: z.boolean().default(false),
   images: z.array(z.string()).min(1, "At least one image is required"),
+  imageFiles: z.array(z.any()).optional(), // Allow File objects
   dimensions: z.string().min(1, "Dimensions are required"),
   weight: z.string().min(1, "Weight is required"),
   care: z.string().min(1, "Care instructions are required"),
@@ -51,6 +52,7 @@ const AdminEditProduct = () => {
       new: false,
       bestseller: false,
       images: [],
+      imageFiles: [],
       dimensions: "",
       weight: "",
       care: "",
@@ -103,7 +105,15 @@ const AdminEditProduct = () => {
     setIsLoading(true);
     
     try {
-      await updateProduct(productId, values);
+      // Get the imageFiles from the form
+      const imageFiles = form.getValues("imageFiles");
+      
+      // Include imageFiles in the update if they exist
+      await updateProduct(productId, {
+        ...values,
+        imageFiles: imageFiles
+      });
+      
       toast.success("Product updated successfully");
       navigate("/admin/products");
     } catch (error) {

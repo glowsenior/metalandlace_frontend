@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API URL should be configured based on your environment
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
+const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
 // Create axios instance with base URL
 export const api = axios.create({
@@ -10,6 +10,19 @@ export const api = axios.create({
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('token')
   },
+});
+
+// Add request interceptor to handle multipart/form-data requests
+api.interceptors.request.use((config) => {
+  // If the request contains FormData, remove the Content-Type header
+  // to let the browser set it with the correct boundary
+  if (
+    config.data instanceof FormData
+  ) {
+    // Let axios set the content type with boundary
+    delete config.headers['Content-Type'];
+  }
+  return config;
 });
 
 export const setTockenApi = (token: string) => {

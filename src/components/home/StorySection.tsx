@@ -42,7 +42,7 @@ const StorySection = () => {
           >
             <div className="aspect-[4/5] overflow-hidden rounded-lg">
               <img 
-                src="https://metalandlacecrafts.com/wp-content/uploads/2025/01/ghost1-scaled.jpg" 
+                src="/ghost1-scaled.jpg" 
                 alt="Ceramic Artisan at Work" 
                 className="w-full h-full object-cover"
               />
