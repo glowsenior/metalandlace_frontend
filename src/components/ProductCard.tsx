@@ -77,9 +77,10 @@ const ProductCard = ({
           <div className="p-4 flex flex-col gap-1 flex-grow">
             <h3 className="font-serif text-lg font-medium text-metal line-clamp-1">{product.name}</h3>
             <p className="text-bronze font-medium">${product.price.toFixed(2)}</p>
-            <div className="mt-2 text-sm text-metal/70 line-clamp-2">
-              {product.description.substring(0, 100)}...
-            </div>
+            <div
+              className="mt-2 text-sm text-metal/70 line-clamp-2"
+              dangerouslySetInnerHTML={{ __html: product.description }}
+            />
           </div>
         </div>
       </Link>

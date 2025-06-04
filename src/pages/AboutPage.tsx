@@ -51,53 +51,131 @@ const AboutPage = () => {
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="space-y-6"
+              className="space-y-6 text-center p-6 rounded-lg transition-all duration-300"
             >
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-metal">
-                From Small Studio to Global Art House
-              </h2>
+              <div className="relative flex flex-col items-center">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-metal z-10 relative text-[#5a3e7c]">
+                  Metal and Lace Crafts
+                </h2>
+                <img
+                  src="https://metalandlacecrafts.com/wp-content/themes/Iva/images/heading-floral-decor-image.png"
+                  alt=""
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-50 md:w-36 opacity-70"
+                  style={{ zIndex: 0 }}
+                  aria-hidden="true"
+                />
+              </div>
               <p className="text-metal/80">
-                Metal & Lace Crafts began as a small studio in Portland with a simple mission: 
-                to create ceramic pieces that combine beauty and function in ways that
-                spark joy and wonder in everyday life.
+                Welcome to <b>Metal and Lace Crafts</b>, where artistry meets functionality! We specialize in creating <b>custom handcrafted tumblers, ceramics, and other unique handmade items</b> designed to add a personal touch to your everyday life.
               </p>
               <p className="text-metal/80">
-                Founded by master ceramicist Elena Thornfield, our studio started with 
-                just two wheels and a kiln. Today, we've grown into a collective of
-                twelve artisans, each bringing their unique vision and techniques to
-                our collections.
+                Each piece is thoughtfully crafted with a blend of creativity, skill, and attention to detail, ensuring no two items are ever the same. Whether you’re searching for a glittering tumbler to make a bold statement, an elegant ceramic piece to elevate your home décor, or a custom gift that leaves a lasting impression, we’ve got you covered.
               </p>
               <p className="text-metal/80">
-                What hasn't changed is our commitment to handcrafted excellence, 
-                sustainable practices, and the magic that happens when fire transforms
-                clay into art.
+                At <b>Metal and Lace Crafts</b>, we believe in the beauty of handmade craftsmanship and the joy of personalization. Explore our collection and find something that’s not only beautiful but also <b>tailored just for you</b>.
+              </p>
+              <p className="text-metal/80">
+                Let’s turn your ideas into one-of-a-kind treasures!
               </p>
             </motion.div>
             
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ 
+                scale: 1.01,
+                transition: { duration: 0.3 }
+              }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="aspect-square overflow-hidden rounded-lg">
-                <img 
-                  src="https://images.unsplash.com/photo-1481401908818-600b7a676c0d?q=80&w=2788&auto=format&fit=crop" 
+              <div 
+                className="absolute -top-6 -left-6 w-2/3 h-24 bg-lace/70 rounded-lg -z-10"
+              />
+              <div className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                <motion.img 
+                  src="https://metalandlacecrafts.com/wp-content/uploads/2025/01/MetalandLace-logo-withbackbackground-1536x1280.png" 
                   alt="Ceramic Studio" 
                   className="w-full h-full object-cover"
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.5 }
+                  }}
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-2/3 h-24 bg-amethyst/20 rounded-lg -z-10" />
+              <div 
+                className="absolute -bottom-6 -right-6 w-2/3 h-24 bg-amethyst/20 rounded-lg -z-10"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-lace/30">
+        <div className="page-container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <div className="aspect-square overflow-hidden rounded-lg duration-300">
+              <motion.img 
+                src="https://metalandlacecrafts.com/wp-content/uploads/2025/01/channiShaiprojectlogo1.png" 
+                alt="Ceramic Studio" 
+                className="w-full h-full object-cover"
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.5 }
+                }}
+              />
+            </div>
+
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="space-y-6 text-center p-6 rounded-lg transition-all duration-300"
+            >
+              <div className="relative flex flex-col items-center">
+                <h4 className="text-3xl md:text-2xl font-serif font-bold text-metal z-10 relative text-[#5a3e7c]">
+                  Channi Shai Project
+                </h4>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-metal z-10 relative text-[#5a3e7c]">
+                  Metal and Lace Crafts
+                </h2>
+                <img
+                  src="https://metalandlacecrafts.com/wp-content/themes/Iva/images/heading-floral-decor-image.png"
+                  alt=""
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-50 md:w-36 opacity-70"
+                  style={{ zIndex: 0 }}
+                  aria-hidden="true"
+                />
+              </div>
+              <p className="text-metal/80">
+                At Metal and Lace Crafts, we create custom tumblers and handcrafted items with a heartfelt purpose. Under the <b>ChanniShai Project</b>, inspired by the memory of our beloved daughter with autism, we strive to honor and celebrate individuals with special needs and their extraordinary stories.
+              </p>
+              <p className="text-metal/80">
+                Each tumbler is a work of art, designed to reflect the beauty, strength, and individuality of those who inspire us. Through this project, we aim to spread love, raise awareness, and keep our daughter’s spirit alive by crafting meaningful pieces that bring joy and connection to others.
+              </p>
+              <p className="text-metal/80">
+                Let us help you create a custom design that celebrates the uniqueness of your loved one or supports the causes closest to your heart. Together, we turn memories into treasures.
+              </p>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Our Process */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="page-container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -160,7 +238,7 @@ const AboutPage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Our Values */}
       <section className="py-20 bg-plum/10">
@@ -241,7 +319,7 @@ const AboutPage = () => {
               <Button asChild size="lg" className="bg-lace text-plum hover:bg-lace/90">
                 <Link to="/products">Shop Our Collections</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-lace text-lace hover:bg-lace/10">
+              <Button asChild variant="outline" size="lg" className="border-lace bg-lace/10 text-lace hover:bg-lace/30">
                 <Link to="/contact">Contact Us</Link>
               </Button>
             </div>

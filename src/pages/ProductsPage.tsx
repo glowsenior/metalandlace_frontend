@@ -22,11 +22,15 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
+import { useToast } from "@/hooks/use-toast";
+
+import { getAllProducts } from "@/services/productService";
 
 const ProductsPage = () => {
+  const { toast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [priceRange, setPriceRange] = useState([0, 200]);
+  const [priceRange, setPriceRange] = useState([0, 300]);
   const [sortOrder, setSortOrder] = useState("featured");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
@@ -75,49 +79,66 @@ const ProductsPage = () => {
   
   // Apply filters and sorting
   useEffect(() => {
-    let result = [...products];
+    const fetchProducts = async () => {
+      try {
+        let result = [];
+        const resData:any = await getAllProducts();
+        result = resData.data.products
+
+        // Apply category filter
+        if (categoryParam !== "all") {
+          result = result.filter(product => product.category === categoryParam);
+        }
+        
+        // Apply attribute filters
+        if (filters.new) {
+          result = result.filter(product => product.new);
+        }
+        if (filters.bestseller) {
+          result = result.filter(product => product.bestseller);
+        }
+        if (filters.featured) {
+          result = result.filter(product => product.featured);
+        }
+        
+        // Apply price range filter
+        result = result.filter(
+          product => product.price >= priceRange[0] && product.price <= priceRange[1]
+        );
+        
+        // Apply sorting
+        switch (sortOrder) {
+          case "price-asc":
+            result.sort((a, b) => a.price - b.price);
+            break;
+          case "price-desc":
+            result.sort((a, b) => b.price - a.price);
+            break;
+          case "name-asc":
+            result.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+          case "name-desc":
+            result.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+          default:
+            // Featured sorting (no change to order)
+            break;
+        }
+        
+        setFilteredProducts(result);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load products",
+          variant: "destructive",
+        });
+      }
+    };
     
-    // Apply category filter
-    if (categoryParam !== "all") {
-      result = result.filter(product => product.category === categoryParam);
-    }
+    fetchProducts();
+    // let result = [...products];
     
-    // Apply attribute filters
-    if (filters.new) {
-      result = result.filter(product => product.new);
-    }
-    if (filters.bestseller) {
-      result = result.filter(product => product.bestseller);
-    }
-    if (filters.featured) {
-      result = result.filter(product => product.featured);
-    }
     
-    // Apply price range filter
-    result = result.filter(
-      product => product.price >= priceRange[0] && product.price <= priceRange[1]
-    );
-    
-    // Apply sorting
-    switch (sortOrder) {
-      case "price-asc":
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case "price-desc":
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case "name-asc":
-        result.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case "name-desc":
-        result.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      default:
-        // Featured sorting (no change to order)
-        break;
-    }
-    
-    setFilteredProducts(result);
   }, [categoryParam, filters, priceRange, sortOrder]);
   
   // Reset to first page when filters change
@@ -184,16 +205,21 @@ const ProductsPage = () => {
                 <h3 className="font-medium mb-3 text-metal">Price Range</h3>
                 <div className="px-2">
                   <Slider
-                    defaultValue={[0, 200]}
-                    max={200}
-                    step={5}
-                    value={priceRange}
-                    onValueChange={setPriceRange}
-                    className="mb-4"
+                  min={0}
+                  max={300}
+                  step={50}
+                  value={priceRange}
+                  onValueChange={setPriceRange}
+                  className="mb-4"
                   />
                   <div className="flex justify-between text-sm text-metal/70">
-                    <span>${priceRange[0]}</span>
-                    <span>${priceRange[1]}</span>
+                  <span>${priceRange[0]}</span>
+                  <span>${priceRange[1]}</span>
+                  </div>
+                  <div className="flex justify-between mt-2 text-xs text-metal/50">
+                  {[0, 100, 200, 300].map(val => (
+                    <span key={val}>${val}</span>
+                  ))}
                   </div>
                 </div>
               </div>
@@ -233,7 +259,7 @@ const ProductsPage = () => {
                 variant="outline"
                 onClick={() => {
                   setFilters({ new: false, bestseller: false, featured: false });
-                  setPriceRange([0, 200]);
+                  setPriceRange([0, 300]);
                   setSortOrder("featured");
                   searchParams.delete("category");
                   setSearchParams(searchParams);
@@ -272,7 +298,7 @@ const ProductsPage = () => {
                 <p className="text-metal/70 mb-8">Try adjusting your filters or browse our categories</p>
                 <Button onClick={() => {
                   setFilters({ new: false, bestseller: false, featured: false });
-                  setPriceRange([0, 200]);
+                  setPriceRange([0, 300]);
                   setSortOrder("featured");
                   searchParams.delete("category");
                   setSearchParams(searchParams);

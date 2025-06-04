@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { getProductById, Product } from "@/data/products";
+import { Product } from "@/data/products";
 import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
 import ProductCard from "@/components/ProductCard";
+
+import { getProductById } from "@/services/productService";
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -22,24 +24,35 @@ const ProductDetailPage = () => {
   const { toast } = useToast();
   
   useEffect(() => {
-    if (productId) {
-      const foundProduct = getProductById(productId);
-      setProduct(foundProduct || null);
-      
-      if (foundProduct) {
-        // Reset states when product changes
-        setQuantity(1);
-        setCurrentImageIndex(0);
+    const getDatas = async () => {
+      console.log(productId, 'sdfasdfasdf')
+      if (productId) {
+        // const foundProduct = getProductById(productId);
+        const resData:any = await getProductById(productId);
+        const foundProduct = resData
+        setProduct(foundProduct || null);
         
-        // Get related products (same category)
-        import("@/data/products").then(({ products }) => {
-          const related = products
-            .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
-            .slice(0, 3);
-          setRelatedProducts(related);
-        });
+        if (foundProduct) {
+          // Reset states when product changes
+          setQuantity(1);
+          setCurrentImageIndex(0);
+          
+          // Get related products (same category)
+          import("@/data/products").then(({ products }) => {
+            const related = products
+              .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
+              .slice(0, 3);
+            setRelatedProducts(related);
+          });
+        }
       }
+      // await new Promise(resolve => setTimeout(resolve, 400));
+      // console.log(product, '------------sss')
     }
+    
+    getDatas();
+    
+    
   }, [productId]);
   
   const handlePrevImage = () => {
@@ -195,9 +208,7 @@ const ProductDetailPage = () => {
               ${product.price.toFixed(2)}
             </div>
             
-            <p className="text-metal/80 mb-8">
-              {product.description}
-            </p>
+            <p className="text-metal/80 mb-8" dangerouslySetInnerHTML={{ __html: product.description }} />
             
             <Separator className="my-6" />
             
@@ -284,9 +295,7 @@ const ProductDetailPage = () => {
             
             <TabsContent value="details" className="mt-6">
               <div className="prose max-w-none text-metal/80">
-                <p className="mb-4">
-                  {product.description}
-                </p>
+                <p className="mb-4" dangerouslySetInnerHTML={{ __html: product.description }} />
                 <h3 className="text-lg font-medium text-metal mb-2">Features</h3>
                 <ul className="list-disc pl-6 mb-4 space-y-1">
                   <li>Handcrafted by skilled artisans</li>
@@ -301,16 +310,7 @@ const ProductDetailPage = () => {
             <TabsContent value="care" className="mt-6">
               <div className="prose max-w-none text-metal/80">
                 <h3 className="text-lg font-medium text-metal mb-2">Care Instructions</h3>
-                <p className="mb-4">
-                  {product.care || "Treat your ceramic piece with care to ensure it lasts for years to come."}
-                </p>
-                <ul className="list-disc pl-6 mb-4 space-y-1">
-                  <li>Clean with mild soap and warm water</li>
-                  <li>Avoid abrasive cleaners that can damage the glaze</li>
-                  <li>Allow to air dry completely before storing</li>
-                  <li>Avoid extreme temperature changes</li>
-                  <li>Handle with care as ceramics can chip or break if dropped</li>
-                </ul>
+                <p className="mb-4" dangerouslySetInnerHTML={{ __html: product.care || "Treat your ceramic piece with care to ensure it lasts for years to come." }} />
               </div>
             </TabsContent>
             

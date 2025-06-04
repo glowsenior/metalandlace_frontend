@@ -1,17 +1,8 @@
-import axios from 'axios';
+
 import { jwtDecode } from 'jwt-decode';
 import { AuthResponse, LoginCredentials, RegisterCredentials, AuthUser } from '@/types/user';
+import  api, { setTockenApi } from '@/services/api';
 
-// API URL should be configured based on your environment
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
-
-// Create axios instance with base URL
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
 
 // Add interceptor to add auth token to requests
 api.interceptors.request.use(
@@ -61,6 +52,7 @@ const login = async (credentials: LoginCredentials): Promise<AuthResponse> => {
     // Store token and user in localStorage
     setToken(token);
     localStorage.setItem('user', JSON.stringify(user));
+    setTockenApi(token); // Set token for future requests
     
     return response.data;
   } catch (error) {

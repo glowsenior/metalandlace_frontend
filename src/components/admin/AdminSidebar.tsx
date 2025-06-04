@@ -60,8 +60,10 @@ const AdminSidebar = () => {
     <Sidebar variant="sidebar" collapsible="icon">
       <SidebarHeader className="flex items-center justify-between p-4">
         <div className="flex items-center">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-amethyst mr-3" />
-          <span className="font-semibold text-lg bg-gradient-to-r from-metal to-plum bg-clip-text text-transparent">
+          <NavLink to="/" className="w-10 h-10 rounded-full from-plum to-amethyst mr-1 group-data-[collapsible=icon]:mr-0 flex items-center justify-center">
+            <img src="/mark.png" alt="Logo" className="h-10 w-10 rounded-full from-plum to-amethyst" />
+          </NavLink>
+          <span className="font-semibold text-lg bg-gradient-to-r from-metal to-plum bg-clip-text text-transparent duration-200 transition-opacity group-data-[collapsible=icon]:hidden group-data-[collapsible=icon]:opacity-0">
             Admin
           </span>
         </div>

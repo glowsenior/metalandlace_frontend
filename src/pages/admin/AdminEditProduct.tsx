@@ -14,7 +14,8 @@ import ProductFormLayout from "@/components/admin/ProductFormLayout";
 import ProductBasicDetailsFields from "@/components/admin/ProductBasicDetailsFields";
 import ProductStatusFields from "@/components/admin/ProductStatusFields";
 import ProductImagesField from "@/components/admin/ProductImagesField";
-import ProductFormActions from "@/components/admin/ProductFormActions"; // ADDED IMPORT
+import ProductAdditionalDetailsFields from "@/components/admin/ProductAdditionalDetailsFields";
+import ProductFormActions from "@/components/admin/ProductFormActions";
 // Form schema for validation
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -26,6 +27,11 @@ const formSchema = z.object({
   new: z.boolean().default(false),
   bestseller: z.boolean().default(false),
   images: z.array(z.string()).min(1, "At least one image is required"),
+  dimensions: z.string().min(1, "Dimensions are required"),
+  weight: z.string().min(1, "Weight is required"),
+  care: z.string().min(1, "Care instructions are required"),
+  colors: z.array(z.string()).default([]),
+  materials: z.array(z.string()).default([]),
 });
 
 const AdminEditProduct = () => {
@@ -45,6 +51,11 @@ const AdminEditProduct = () => {
       new: false,
       bestseller: false,
       images: [],
+      dimensions: "",
+      weight: "",
+      care: "",
+      colors: [],
+      materials: [],
     },
   });
   
@@ -66,6 +77,11 @@ const AdminEditProduct = () => {
             new: product.new,
             bestseller: product.bestseller,
             images: product.images,
+            dimensions: product.dimensions || "",
+            weight: product.weight || "",
+            care: product.care || "",
+            colors: product.colors || [],
+            materials: product.materials || [],
           };
           form.reset(values);
         } else {
@@ -119,7 +135,10 @@ const AdminEditProduct = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <ProductBasicDetailsFields form={form} />
+            <div className="space-y-6">
+              <ProductBasicDetailsFields form={form} />
+              <ProductAdditionalDetailsFields form={form} />
+            </div>
             
             <div className="space-y-6">
               <ProductStatusFields form={form} />
